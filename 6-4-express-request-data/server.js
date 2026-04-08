@@ -106,29 +106,16 @@ LAB SETUP INSTRUCTIONS
 
 //import express
 
+import express from "express";
 
 // create express app instance to create web server
 
-
-
-// Query params: /echo?name=Ali&age=22
-
-
-// Route params: /profile/First/Last
-
-
-// Route param middleware example: /users/42
-
-
-// Route params: /users/:userId route
-
-
-// Start the server by listening
-
-
-import express from "express";
-
 const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Server is up");
+});
+// Query params: /echo?name=Ali&age=22
 
 app.get("/echo", (req, res) => {
   const { name, age } = req.query;
@@ -140,9 +127,6 @@ app.get("/echo", (req, res) => {
     });
   }
 
-  
-
-  
   res.json({
     ok: true,
     name,
@@ -151,7 +135,7 @@ app.get("/echo", (req, res) => {
   });
 });
 
-
+// Route params: /profile/First/Last
 
 app.get("/profile/:first/:last", (req, res) => {
   const { first, last } = req.params;
@@ -162,6 +146,8 @@ app.get("/profile/:first/:last", (req, res) => {
   });
 });
 
+// Route param middleware example: /users/42
+
 app.param("userId", (req, res, next, userId) => {
   const id = Number(userId);
 
@@ -171,11 +157,24 @@ app.param("userId", (req, res, next, userId) => {
       error: "userId must be positive number"
     });
   }
-  req.userIdNum = id;
 
+  req.userIdNum = id;
   next();
 });
 
+
+// Route params: /users/:userId route
+app.get("/users/:userId", (req, res) => {
+  res.json({
+    ok: true,
+    userId: req.userIdNum
+  });
+});
+
+// Start the server by listening
 app.listen(3000, () => {
   console.log("API running at http://localhost:3000");
 });
+
+
+
