@@ -140,6 +140,9 @@ app.get("/echo", (req, res) => {
     });
   }
 
+  
+
+  
   res.json({
     ok: true,
     name,
@@ -147,6 +150,18 @@ app.get("/echo", (req, res) => {
     msg: `Hello ${name}, you are ${age}`
   });
 });
+
+
+
+app.get("/profile/:first/:last", (req, res) => {
+  const { first, last } = req.params;
+
+  res.json({
+    ok: true,
+    fullName: `${first} ${last}`
+  });
+});
+
 
 app.listen(3000, () => {
   console.log("API running at http://localhost:3000");
