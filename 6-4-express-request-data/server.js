@@ -162,6 +162,19 @@ app.get("/profile/:first/:last", (req, res) => {
   });
 });
 
+app.param("userId", (req, res, next, userId) => {
+  const id = Number(userId);
+
+  if (!id || id <= 0) {
+    return res.status(400).json({
+      ok: false,
+      error: "userId must be positive number"
+    });
+  }
+  req.userIdNum = id;
+
+  next();
+});
 
 app.listen(3000, () => {
   console.log("API running at http://localhost:3000");
